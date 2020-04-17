@@ -1,0 +1,24 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+mean1 = 5
+StDev1 = 1.25
+size = 1000
+x = np.linspace(mean1 - 3*StDev1, mean1 + 3*StDev1, size)
+x = x.tolist()
+
+print("Distribution info:")
+print("mean: ", mean1)
+print("StDev: ", StDev1)
+print("")
+
+big = 0
+for i in range(size):
+    big = big + (x[i] * (1/size))
+
+print("expected value is: ", big)
+
+
+# plt.plot(x, norm.pdf(x, mean1, StDev1))
+# plt.show()
