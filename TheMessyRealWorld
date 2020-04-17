@@ -1,0 +1,48 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+mean1 = 5
+StDev1 = 1.25
+size = 1000
+x = np.linspace(mean1 - 3*StDev1, mean1 + 3*StDev1, size)
+x = x.tolist()
+
+print("Distribution info:")
+print("mean: ", mean1)
+print("StDev: ", StDev1)
+print("")
+
+big = 0
+for i in range(size):
+    big = big + (x[i] * (1/size))
+
+bigger = 0
+for i in range(size):
+    bigger = bigger + x[i]
+calcmean = bigger/size
+
+varSum = 0
+for i in range(size):
+    varSum = varSum + ((x[i]-calcmean)*(x[i]-calcmean))
+variance = varSum/(size-1)
+
+skewSum = 0
+for i in range(size):
+    skewSum = skewSum + ((x[i]-calcmean)*(x[i]-calcmean)*(x[i]-calcmean))
+skew = skewSum/((size-1)*StDev1*StDev1*StDev1)
+
+kurtSum1 = 0
+for i in range(size):
+    kurtSum1 = kurtSum1 + ((x[i]-calcmean)*(x[i]-calcmean)*(x[i]-calcmean)*(x[i]-calcmean))
+
+kurtSum2 = 0
+for i in range(size):
+    kurtSum2 = kurtSum2 + ((x[i]-calcmean)*(x[i]-calcmean))
+kurt = kurtSum1/(kurtSum2*kurtSum2)
+
+print("expected value is: ", big)
+print("calculated mean is: ", calcmean)
+print("variance is :", variance)
+print("skewness is: ", skew)
+print("kurtosis is: ", kurt)
