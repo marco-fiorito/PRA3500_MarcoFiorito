@@ -63,18 +63,18 @@ n = 10
 p = 0.5
 
 def run_binom(trials, n, p):
-    Array = []
+    array = []
     for i in range(trials):
-        trial = [np.random.random() for i in range(n)]
-        Array.append(len([i for i in trial if i>=0.50]))
-    return Array
+        trialnum = [np.random.random() for i in range(n)]
+        array.append(len([i for i in trialnum if i>=0.50]))
+    return array
 
 
-Array = run_binom(trials, n, p)
-fig, ax = plt.subplots(figsize=(14,7))
-ax = sns.distplot(Array, bins=11, label='simulation results')
+array = run_binom(trials, n, p)
+fig, xy = plt.subplots(figsize=(14,7))
+xy = sns.distplot(array, bins=11, label='simulation results')
 x = range(0,11)
-ax.plot(x, binom.pmf(x, n, p), 'ro', label='actual binomial distribution')
+xy.plot(x, binom.pmf(x, n, p), 'ro', label='actual binomial distribution')
 plt.show()
 
 # poisson distribution: comment out the rest and run just the following part 
