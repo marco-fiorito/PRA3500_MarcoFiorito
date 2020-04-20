@@ -4,12 +4,15 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.stats import binom
 
-# gaussian distribution
+# gaussian distribution: this part of the code generates, plots, and also calculated the probability between two values
 
+# this part generates the distribution
 mean = 5
 StDev = 1.25
 size = 5000
 GaussianDistributionArray = np.random.normal(mean, StDev, size)
+
+# displays the distribution info
 
 print("Distribution info:")
 print("mean: ", mean)
@@ -17,9 +20,13 @@ print("StDev: ", StDev)
 print("n values: ", size)
 print("")
 
-# count, bins, ignored = plt.hist(GaussianDistributionArray, 60, density=True)
-# plt.plot(bins, 1/(StDev * np.sqrt(2 * np.pi)) * np.exp( - (bins - mean)**2 / (2 * StDev**2) ),linewidth=2, color='r')
-# plt.show()
+# plots the distribution
+
+count, bins, ignored = plt.hist(GaussianDistributionArray, 60, density=True)
+plt.plot(bins, 1/(StDev * np.sqrt(2 * np.pi)) * np.exp( - (bins - mean)**2 / (2 * StDev**2) ),linewidth=2, color='r')
+plt.show()
+
+# this calculates probability between two values 
 
 GDA_List = GaussianDistributionArray.tolist()
 GDA_List = sorted(GDA_List)
@@ -27,6 +34,8 @@ value1 = 5
 value2 = 8
 print("Values [1 , 2]: ", value1, ",", value2)
 print("")
+
+# these two loops find the values at which to cut the distribution list
 
 V1cutloc = 0
 for x in GDA_List:
@@ -47,49 +56,37 @@ print(len(GDA_Cut), "/", size, "of the values (", (len(GDA_Cut)/size)*100
       , "% ) in this Gaussian distribution can be found in the range",
       value1, "-", value2)
 
+# binomial distribution: comment out the rest and run just the following part 
+
+trials = 2000
+n = 10
+p = 0.5
+
+def run_binom(trials, n, p):
+    Array = []
+    for i in range(trials):
+        trial = [np.random.random() for i in range(n)]
+        Array.append(len([i for i in trial if i>=0.50]))
+    return Array
 
 
+Array = run_binom(trials, n, p)
+fig, ax = plt.subplots(figsize=(14,7))
+ax = sns.distplot(Array, bins=11, label='simulation results')
+x = range(0,11)
+ax.plot(x, binom.pmf(x, n, p), 'ro', label='actual binomial distribution')
+plt.show()
 
+# poisson distribution: comment out the rest and run just the following part 
 
+PoissonDistributionArray = np.random.poisson(lam=2, size=1000)
+x= sns.distplot(PoissonDistributionArray, bins=6)
+x.set_xlim(right=10)
+plt.show(x)
 
+# exponential distribution: comment out the rest and run just the following part 
 
-
-# condition1 = (x <= value1)
-# Ext1 = np.extract(condition1, GDA_List)
-
-
-# binomial distribution
-
-# trials = 2000
-# n = 10
-# p = 0.5
-#
-#
-# def run_binom(trials, n, p):
-#     Array = []
-#     for i in range(trials):
-#         trial = [np.random.random() for i in range(n)]
-#         Array.append(len([i for i in trial if i>=0.50]))
-#     return Array
-#
-#
-# Array = run_binom(trials, n, p)
-# fig, ax = plt.subplots(figsize=(14,7))
-# ax = sns.distplot(Array, bins=11, label='simulation results')
-# x = range(0,11)
-# ax.plot(x, binom.pmf(x, n, p), 'ro', label='actual binomial distribution')
-# plt.show()
-
-# poisson distribution
-
-# PoissonDistributionArray = np.random.poisson(lam=2, size=1000)
-# x= sns.distplot(PoissonDistributionArray, bins=6)
-# x.set_xlim(right=10)
-# plt.show(x)
-
-# exponential distribution
-#
-# ExponentialDistributionArray = np.random.exponential(scale=1, size=1000)
-# x= sns.distplot(ExponentialDistributionArray, bins=10)
-# x.set_xlim(right=10)
-# plt.show(x)
+ExponentialDistributionArray = np.random.exponential(scale=1, size=1000)
+x= sns.distplot(ExponentialDistributionArray, bins=10)
+x.set_xlim(right=10)
+plt.show(x)
