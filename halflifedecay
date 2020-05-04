@@ -1,0 +1,51 @@
+import random
+import matplotlib.pyplot as plt
+
+datasetsize = 5000
+start, end = 1, 100
+halflife = 50  # in seconds lets say
+
+atoms = [1] * datasetsize
+timeintervals = list(range(1, 300))
+print(timeintervals)
+
+def decay(time):
+    probdecay = 1-(2 ** ((0-time)/halflife))
+    probdecay = probdecay*100
+    print("probdecay", probdecay)
+    decayprobatom = [random.randint(start, end) for y in range(datasetsize)]
+    print(decayprobatom)
+
+    for z in range(datasetsize):
+        if decayprobatom[z] > probdecay:
+            atoms[z] = 1
+        else:
+            atoms[z] = 0
+
+    atomcount = atoms.count(1)
+    print(atomcount)
+    return
+
+
+atomsovertime1 = []
+for x in timeintervals:
+    decay(x)
+    atomsovertime1.append(atoms.count(1))
+
+atomsovertime2 = []
+for x in timeintervals:
+    decay(x)
+    atomsovertime2.append(atoms.count(1))
+
+atomsovertime3 = []
+for x in timeintervals:
+    decay(x)
+    atomsovertime3.append(atoms.count(1))
+
+atomsaverage = []
+for x in timeintervals:
+    average = (atomsovertime1[x-1] + atomsovertime2[x-1] + atomsovertime3[x-1])/3
+    atomsaverage.append(average)
+
+plt.plot(atomsaverage)
+plt.show()
