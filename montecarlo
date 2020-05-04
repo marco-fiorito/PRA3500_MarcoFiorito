@@ -1,0 +1,17 @@
+import random
+import matplotlib.pyplot as plt
+
+datasetsize = 100
+start, end = 1, 100
+
+data = [random.randint(start, end) for x in range(datasetsize)]
+
+datay=[]
+for x in range(datasetsize):
+    datay.append(data[x-1])
+
+print(data)
+print(datay)
+
+plt.plot(data, datay)
+plt.show()
