@@ -1,0 +1,278 @@
+import random
+import matplotlib
+import matplotlib.pyplot as plt
+
+clubs = list(range(1, 14))
+spades = list(range(101, 114))
+hearts = list(range(201, 214))
+diamonds = list(range(301, 314))
+deck = clubs + spades + hearts + diamonds
+
+
+def royalflush(selectedcards):
+
+    card1 = selectedcards[0]
+    cardrange = list(range((card1-14), (card1+14)))
+    for x in selectedcards:
+        if x not in cardrange:
+            return 0
+    # checks if all cards are in same deck
+
+    divfac = 100 * int(card1/100)
+    numval = []
+    for x in selectedcards:
+        numval.append(x-divfac)
+    numval = sorted(numval)
+    # takes all numbers down to same level
+
+    confirm = 0
+    if 1 in numval:
+        if 13 in numval:
+            if 12 in numval:
+                if 11 in numval:
+                    if 10 in numval:
+                        confirm = 1
+    # checks for the specific values
+
+    if confirm == 1:
+        return 1
+    else:
+        return 0
+
+
+def straightflush(selectedcards):
+
+    card1 = selectedcards[0]
+    cardrange = list(range((card1 - 14), (card1 + 14)))
+    for x in selectedcards:
+        if x not in cardrange:
+            return 0
+    # checks if all cards are in same deck
+
+    divfac = 100 * int(card1/100)
+    numval = []
+    for x in selectedcards:
+        numval.append(x-divfac)
+    numval = sorted(numval)
+    # takes all numbers down to same level
+
+    confirm = []
+    if numval[1] == (numval[0]+1):
+        if numval[2] == (numval[1]+1):
+            if numval[3] == (numval[2] + 1):
+                if numval[4] == (numval[3] + 1):
+                    confirm = 1
+
+    if confirm == 1:
+        return 1
+    else:
+        return 0
+
+
+def fourofakind(selectedcards):
+
+    numval = []
+    for x in selectedcards:
+        divfac = 100 * int(x/100)
+        numval.append(x-divfac)
+    numval = sorted(numval)
+    # takes all numbers down to same level
+
+    confirm = 0
+    if numval.count(numval[2]) == 4:
+        confirm = 1
+    else:
+        confirm = 0
+
+    if confirm == 1:
+        return 1
+    else:
+        return 0
+
+
+def fullhouse(selectedcards):
+
+    numval = []
+    for x in selectedcards:
+        divfac = 100 * int(x/100)
+        numval.append(x-divfac)
+    numval = sorted(numval)
+    # takes all numbers down to same level
+
+    confirmtoak = 0  # confirmtoak = confirm three of a kind
+    if numval.count(numval[2]) == 3:
+        confirmtoak = 1
+        numremove = numval[2]
+        numval.remove(numremove)
+        numval.remove(numremove)
+        numval.remove(numremove)
+    else:
+        confirmtoak = 0
+
+    confirmp = 0  # confirmp = confirm pair
+    if numval[0] == numval[1]:
+        confirmp = 1
+    else:
+        confirmp = 0
+
+    totconfirm = confirmtoak + confirmp
+
+    if totconfirm == 2:
+        return 1
+    else:
+        return 0
+
+
+def flush(selectedcards):
+
+    card1 = selectedcards[0]
+    cardrange = list(range((card1 - 14), (card1 + 14)))
+    for x in selectedcards:
+        if x not in cardrange:
+            return 0
+    return 1
+
+
+def straight(selectedcards):
+
+    numval = []
+    for x in selectedcards:
+        divfac = 100 * int(x / 100)
+        numval.append(x - divfac)
+    numval = sorted(numval)
+    # takes all numbers down to same level
+
+    confirm = []
+    if numval[1] == (numval[0] + 1):
+        if numval[2] == (numval[1] + 1):
+            if numval[3] == (numval[2] + 1):
+                if numval[4] == (numval[3] + 1):
+                    confirm = 1
+
+    if confirm == 1:
+        return 1
+    else:
+        return 0
+
+
+def threeofakind(selectedcards):
+
+    numval = []
+    for x in selectedcards:
+        divfac = 100 * int(x / 100)
+        numval.append(x - divfac)
+    numval = sorted(numval)
+    # takes all numbers down to same level
+
+    confirmtoak = 0  # confirmtoak = confirm three of a kind
+    if numval.count(numval[2]) == 3:
+        confirmtoak = 1
+    else:
+        confirmtoak = 0
+
+    if confirmtoak == 1:
+        return 1
+    else:
+        return 0
+
+
+def twopair(selectedcards):
+
+    numval = []
+    for x in selectedcards:
+        divfac = 100 * int(x / 100)
+        numval.append(x - divfac)
+    numval = sorted(numval)
+    # takes all numbers down to same level
+
+    numtests = []
+    for x in numval:
+        if numval.count(x) == 2:
+            numtests.append(x)
+
+    if len(numtests) == 4:
+        return 1
+    else:
+        return 0
+
+
+def onepair(selectedcards):
+
+    numval = []
+    for x in selectedcards:
+        divfac = 100 * int(x / 100)
+        numval.append(x - divfac)
+    numval = sorted(numval)
+    # takes all numbers down to same level
+
+    numtests = []
+    for x in numval:
+        if numval.count(x) == 2:
+            numtests.append(1)
+
+    if 1 in numtests:
+        return 1
+    else:
+        return 0
+
+
+def highcard(selectedcards):
+
+    numval = []
+    for x in selectedcards:
+        divfac = 100 * int(x / 100)
+        numval.append(x - divfac)
+    numval = sorted(numval)
+    # takes all numbers down to same level
+
+    if numval[0] == 1:
+        return 1
+    else:
+        return numval[4]
+
+
+def check(selectedcards):
+
+    test1 = royalflush(selectedcards)
+    test2 = straightflush(selectedcards)
+    test3 = fourofakind(selectedcards)
+    test4 = fullhouse(selectedcards)
+    test5 = flush(selectedcards)
+    test6 = straight(selectedcards)
+    test7 = threeofakind(selectedcards)
+    test8 = twopair(selectedcards)
+    test9 = onepair(selectedcards)
+    test10 = highcard(selectedcards)
+
+    tests = [test1, test2, test3, test4, test5, test6, test7, test8, test9, test10]
+
+    highestsuccess = []
+    labels = ["Royal Flush", "Straight Flush", "Four of a Kind", "Full House", "Flush", "Straight", "Three of a Kind",
+              "Two Pair", "Pair"]
+    if 1 in tests[0:9]:
+        return tests.index(1)
+    else:
+        return 9
+
+
+repetitions = 100000
+tabresults = [0] * 10
+for x in range(repetitions):
+
+    selectedcards = []
+
+    for x in range(5):
+        selectedcards.append(deck[random.randint(0, 51)])
+
+    result = check(selectedcards)
+
+    tabresults[result] = tabresults[result] + 1
+
+print(tabresults)
+
+xrange = list(range(1,11))
+plt.xticks(xrange, labels = ["Royal Flush", "Straight Flush", "Four of a Kind", "Full House", "Flush", "Straight", "Three of a Kind",
+              "Two Pair", "Pair", "High Card"], rotation = 45)
+plt.bar(xrange, tabresults)
+plt.ylabel("Occurance in 100000 trials")
+plt.show()
