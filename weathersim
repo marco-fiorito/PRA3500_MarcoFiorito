@@ -1,0 +1,46 @@
+import random
+import matplotlib.pyplot as plt
+
+sims = 50  # number of simulations to run
+days = 14  # days of forecast
+  # sunny = 1, rainy = 0
+
+sunnydays = []
+rainydays = []
+
+for y in range(sims):
+    weather = [1]
+    for x in range(days - 1):
+        probability = random.randint(1, 10)
+        if weather[x] == 1:
+            if probability >= 9:
+                weather.append(0)
+            elif probability < 9:
+                weather.append(1)
+        elif weather[x] == 0:
+            if probability >= 5:
+                weather.append(1)
+            elif probability < 5:
+                weather.append(0)
+        else:
+            print("Error: weather at index", x, "is neither 1 or 0")
+
+    sunnycount = weather.count(1)
+    rainycount = weather.count(0)
+    if sunnycount == 15:
+        print(weather)
+
+    sunnydays.append(sunnycount)
+    rainydays.append(rainycount)
+
+print(sunnydays)
+print(rainydays)
+sims = list(range(1, (sims+1)))
+print(list(range(14)))
+plt.bar(sims, rainydays, label="Rainy Days")
+plt.bar(sims, sunnydays, bottom=rainydays, color='gold', label="Sunny Days")
+plt.ylabel("Days")
+plt.xlabel("Simulation Number")
+plt.legend(loc="upper right")
+plt.title("Simulated Weather Forecast over 14 days")
+plt.show()
