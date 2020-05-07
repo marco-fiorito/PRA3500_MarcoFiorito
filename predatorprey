@@ -75,7 +75,7 @@ for t in range(TimeSteps):
             currentloc2 = PredatorLoc[prednum]
             PredatorLoc[prednum] = movement[currentloc2-1][moveloc]
             # print("currentloc2", currentloc2, "moveto#3", PredatorLoc[prednum])
-        if chance < MoveChance:
+        elif chance < MoveChance:
             moveloc = random.randint(0, 7)
             # print("prednum", prednum, "predloc", PredatorLoc)
             currentloc = PredatorLoc[prednum]
