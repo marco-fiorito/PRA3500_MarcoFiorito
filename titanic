@@ -1,0 +1,35 @@
+import csv
+import matplotlib.pyplot as plt
+
+my_data = csv.DictReader(open("train.csv"))
+
+import pandas as pd
+df = pd.read_csv('train.csv', sep=',', quotechar='"')
+df.values
+
+print(df)
+
+column1, column2 = [], []
+
+col_a = list(df.Survived)
+col_b = list(df.Pclass)
+
+survivedclass = []
+deadclass = []
+
+for i in range(len(col_a)):
+    if col_a[i] == 1:
+        survivedclass.append(col_b[i])
+    if col_a[i] == 0:
+        deadclass.append(col_b[i])
+
+print(survivedclass, deadclass)
+s1, s2, s3, d1, d2, d3 = survivedclass.count(1), survivedclass.count(2), survivedclass.count(3),deadclass.count(1),\
+                         deadclass.count(2), deadclass.count(3)
+
+plt.bar((1, 2, 3, 4, 5, 6), (s1, s2, s3, d1, d2, d3))
+plt.xlabel('Survived                                         Died')
+plt.ylabel('Number of Passengers in Class')
+plt.title('Survival plotted against Passenger Class')
+plt.show()
+print(col_a)
