@@ -1,0 +1,55 @@
+import csv
+import matplotlib.pyplot as plt
+import numpy as np
+
+my_data = csv.DictReader(open("train.csv"))
+
+import pandas as pd
+df = pd.read_csv('train.csv', sep=',', quotechar='"')
+df.values
+
+def calcgini(a1, a2, b1, b2):
+    gini_1 = 1 - np.square(a1 / (a1 + a2)) - np.square(a2 / (a1 + a2))
+    gini_2 = 1 - np.square(b1 / (b1 + b2)) - np.square(b2 / (b1 + b2))
+    combinedgini = ((a1 + a2) / (a1+a2+b1+b2)) * gini_1 + ((b1 + b2) / (a1+a2+b1+b2)) * gini_2
+    return combinedgini
+
+male = []
+female = []
+col_a = list(df.Survived)
+col_b = list(df.Sex)
+
+for i in range(len(col_a)):
+    if col_b[i] == "male":
+        male.append(col_a[i])
+    if col_b[i] == "female":
+        female.append(col_a[i])
+
+ms = male.count(1)
+md = male.count(0)
+fs = female.count(1)
+fd = female.count(0)
+# print(male, female)
+# print(ms, md, fs, fd)
+
+print("Calculated Gini for Sex", calcgini(ms, md, fs, fd))
+
+poor = []
+rich = []
+col_a = list(df.Survived)
+col_b = list(df.Fare)
+
+for i in range(len(col_a)):
+    if col_b[i] <= 10:
+        poor.append(col_a[i])
+    if col_b[i] > 10:
+        rich.append(col_a[i])
+
+ms = poor.count(1)
+md = poor.count(0)
+fs = rich.count(1)
+fd = rich.count(0)
+# print(poor, rich)
+# print(ms, md, fs, fd)
+
+print("Calculated Gini for Fare (split at <= 10)", calcgini(ms, md, fs, fd))
