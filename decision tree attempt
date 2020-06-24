@@ -9,6 +9,7 @@ df = pd.read_csv('train.csv', sep=',', quotechar='"')
 df.values
 
 result = df["Survived"]
+criteria = [col_Age, col_Fare, col_Pclass, col_Sex]
 col_Survived = list(df.Survived)
 col_Sex = list(df.Sex)
 col_Pclass = list(df.Pclass)
@@ -39,10 +40,53 @@ def datatype(csvcolumn):
 
 node2 = []
 
-for i in range(len(col_Survived)):
-    if col_Sex[i] == "male":
-        nodeloc.append(col_a[i])
-    if col_Sex[i] == "female":
-        female.append(col_Survived[i])
+def identifydata(criteria):
+    datatypes =[]
+    for i in range(len(criteria)):
+        if criteria[i] not in datatypes:
+            datatypes.append(criteria[i])
+    return datatypes
+
+def getnum(bingo):
+    if datatype(bingo) == 'binary':
+        a =[]
+        b=[]
+        a1 =a.count(1)
+        a2 =a.count(0)
+        b1 =b.count(1)
+        b2 =b.count(0)
+        for i in range(len(bingo)):
+            if bingo[i] == 0:
+                a.append(bingo[i])
+            if bingo[i] == 1:
+                b.append(result[i])
+        return a1, a2, b1, b2
+    elif datatype(bingo) == 'other':
+        datatypes = identifydata(bingo)
+        ginivalues =[]
+        for data in datatypes:
+            a = []
+            b = []
+            a1 = a.count(1)
+            a2 = a.count(0)
+            b1 = b.count(1)
+            b2 = b.count(0)
+            for i in range(len(bingo)):
+                if bingo[i] == data:
+                    a.append(bingo[i])
+                if bingo[i] == data:
+                    b.append(result[i])
+            ginivalues.append(calcgini(a1, a2, b1, b2))
+        ginivalues.sort()
+        lowestgini = ginivalues[0]
+        return lowestgini
+
+def comparegini():
+    ginilist = []*len(criteria)
+    for x in criteria:
+        
+
+def createsplit():
+    
 
 # rootnode = sex
