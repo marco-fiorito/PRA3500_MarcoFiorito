@@ -1,0 +1,51 @@
+import csv
+import matplotlib.pyplot as plt
+import numpy as np
+
+my_data = csv.DictReader(open("train.csv"))
+
+import pandas as pd
+df = pd.read_csv('train.csv', sep=',', quotechar='"')
+df.values
+
+result = df["Survived"]
+col_Survived = list(df.Survived)
+col_Sex = list(df.Sex)
+col_Pclass = list(df.Pclass)
+col_Age = list(df.Age)
+col_Fare = list(df.Fare)
+
+def calcgini(a1, a2, b1, b2):
+    gini_1 = 1 - np.square(a1/(a1 + a2)) - np.square(a2/(a1 + a2))
+    gini_2 = 1 - np.square(b1/(b1 + b2)) - np.square(b2/(b1 + b2))
+    acc = ((a1 + a2)/(a1+a2+b1+b2)) * gini_1 + ((b1 + b2)/(a1+a2+b1+b2)) * gini_2
+    return acc
+
+
+def datatype(csvcolumn):
+    datatype = []
+    for x in csvcolumn:
+        if csvcolumn[x].dtype != "O":
+            datatype.append("numbers")
+        else:
+            if csvcolumn[x].nunique() <= 2:
+                datatype.append("binary")
+            else:
+                datatype.append("other")
+    return datatype
+
+# depth = 1
+# for i in range(depth):
+
+node2 = []
+
+for i in range(len(col_Survived)):
+    if col_Sex[i] == "male":
+        nodeloc.append(col_a[i])
+    if col_Sex[i] == "female":
+        female.append(col_Survived[i])
+
+# rootnode = sex
+
+
+
